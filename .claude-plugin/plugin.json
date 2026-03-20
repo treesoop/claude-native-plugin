@@ -1,0 +1,10 @@
+{
+  "name": "claude-native-plugin",
+  "version": "0.1.0",
+  "description": "Claude Code native plugins that save tokens, time, and money",
+  "author": {
+    "name": "Potenlab",
+    "url": "https://github.com/potenlab"
+  },
+  "repository": "https://github.com/potenlab/claude-native-plugin"
+}

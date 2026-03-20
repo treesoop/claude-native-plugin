@@ -1,0 +1,17 @@
+{
+  "description": "Summarize Playwright MCP snapshots with Haiku to reduce Opus token consumption",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "mcp__playwright__.*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/summarize-playwright.sh",
+            "timeout": 20
+          }
+        ]
+      }
+    ]
+  }
+}

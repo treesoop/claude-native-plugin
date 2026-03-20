@@ -1,0 +1,15 @@
+{
+  "name": "potenlab-plugins",
+  "owner": {
+    "name": "Potenlab",
+    "url": "https://github.com/potenlab"
+  },
+  "description": "Claude Code plugins that save tokens and money by Potenlab",
+  "plugins": [
+    {
+      "name": "playwright-optimizer",
+      "description": "Reduce Playwright MCP token usage by ~80% using Haiku summarization",
+      "source": "./plugins/playwright-optimizer"
+    }
+  ]
+}

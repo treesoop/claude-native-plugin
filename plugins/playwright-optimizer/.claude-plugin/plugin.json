@@ -9,6 +9,5 @@
   "homepage": "https://github.com/potenlab/claude-native-plugin/tree/main/plugins/playwright-optimizer",
   "repository": "https://github.com/potenlab/claude-native-plugin",
   "license": "MIT",
-  "keywords": ["playwright", "token-optimization", "browser", "haiku", "cost-reduction"],
-  "hooks": "./hooks/hooks.json"
+  "keywords": ["playwright", "token-optimization", "browser", "haiku", "cost-reduction"]
 }

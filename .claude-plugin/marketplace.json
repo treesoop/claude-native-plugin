@@ -1,15 +1,22 @@
 {
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "potenlab-plugins",
   "owner": {
     "name": "Potenlab",
-    "url": "https://github.com/potenlab"
+    "email": "potenlab.dev@gmail.com"
   },
-  "description": "Claude Code plugins that save tokens and money by Potenlab",
+  "metadata": {
+    "description": "Claude Code plugins that save tokens and money by Potenlab",
+    "version": "1.0.0",
+    "pluginRoot": "./plugins"
+  },
   "plugins": [
     {
       "name": "playwright-optimizer",
-      "description": "Reduce Playwright MCP token usage by ~80% using Haiku summarization",
-      "source": "./plugins/playwright-optimizer"
+      "description": "Reduce Playwright MCP token usage by ~90% using Haiku summarization",
+      "source": "./plugins/playwright-optimizer",
+      "category": "optimization",
+      "tags": ["playwright", "token-optimization", "browser", "haiku", "cost-reduction"]
     }
   ]
 }

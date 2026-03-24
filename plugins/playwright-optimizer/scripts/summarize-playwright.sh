@@ -1,12 +1,12 @@
 #!/bin/bash
-# playwright-optimizer: Summarize Playwright MCP snapshots with Haiku
-# Reduces Opus token consumption by ~80% while preserving all ref= values
+# playwright-optimizer: Summarize Playwright MCP snapshots using Claude CLI (internal Haiku)
+# No external API calls — uses Claude Code's own authentication (claude.ai subscription)
 #
 # How it works:
 #   1. Intercepts Playwright MCP tool responses via PostToolUse hook
-#   2. Sends large snapshots to Claude Haiku for summarization
+#   2. Pipes large snapshots to `claude -p --model haiku` for summarization
 #   3. Returns compact summary with all interactive refs preserved
-#   4. Opus receives ~2K tokens instead of ~12K tokens
+#   4. Primary model receives ~2K tokens instead of ~12K tokens
 
 set -e
 
@@ -26,13 +26,6 @@ if [ "$RAW_LEN" -lt 3000 ]; then
   exit 0
 fi
 
-# Require ANTHROPIC_API_KEY
-API_KEY="${ANTHROPIC_API_KEY:-}"
-if [ -z "$API_KEY" ]; then
-  exit 0
-fi
-
-# Summarize with Haiku
 SYSTEM_PROMPT='You are a Playwright browser snapshot summarizer. Extract ONLY actionable information for an AI agent that interacts with web pages.
 
 Rules:
@@ -46,25 +39,11 @@ Rules:
 - Output in the same language as the page content
 - Be concise but NEVER drop ref values or interactive elements'
 
-USER_PROMPT="Summarize this Playwright snapshot. Keep all ref= values for interactive elements:
+# Claude CLI Haiku call (uses Claude Code's subscription auth, no API key needed)
+# env -u ANTHROPIC_API_KEY: ensures subscription auth is used over API key
+SUMMARY=$(echo "Summarize this Playwright snapshot. Keep all ref= values for interactive elements:
 
-${TOOL_RESPONSE}"
-
-RESPONSE=$(curl -s --max-time 15 https://api.anthropic.com/v1/messages \
-  -H "content-type: application/json" \
-  -H "x-api-key: ${API_KEY}" \
-  -H "anthropic-version: 2023-06-01" \
-  -d "$(jq -n \
-    --arg system "$SYSTEM_PROMPT" \
-    --arg user "$USER_PROMPT" \
-    '{
-      model: "claude-haiku-4-5-20251001",
-      max_tokens: 2000,
-      system: $system,
-      messages: [{role: "user", content: $user}]
-    }')")
-
-SUMMARY=$(echo "$RESPONSE" | jq -r '.content[0].text // empty')
+${TOOL_RESPONSE}" | env -u ANTHROPIC_API_KEY claude -p --model haiku --append-system-prompt "$SYSTEM_PROMPT" --no-session-persistence 2>/dev/null)
 
 # If summarization fails, pass through original
 if [ -z "$SUMMARY" ]; then

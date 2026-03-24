@@ -1,40 +1,38 @@
 # Playwright Optimizer
 
-Reduce Playwright MCP token usage by **~80%** using Claude Haiku as a summarization layer.
+Reduce Playwright MCP token usage by **~90%** using Claude Haiku as a summarization layer.
 
 ## Problem
 
-Every Playwright MCP snapshot sends **10,000-15,000 tokens** of raw YAML to your primary model (Opus/Sonnet). Most of this is noise — footers, calendars, styling info, redundant navigation.
-
-A typical browser automation session burns **40,000+ tokens** just on page snapshots.
+Every Playwright MCP snapshot sends **10,000-60,000+ characters** of raw YAML to your primary model (Opus/Sonnet). Most of this is noise — footers, calendars, styling info, redundant navigation.
 
 ## Solution
 
-This plugin intercepts Playwright MCP responses via a `PostToolUse` hook and summarizes them with Claude Haiku before they reach your primary model.
+This plugin intercepts Playwright MCP responses via a `PostToolUse` hook and summarizes them with Claude Haiku using `claude -p --model haiku` — **no external API calls, no API key needed**.
 
 ```
-Playwright MCP → 12,000 token YAML snapshot
+Playwright MCP → 60,000 char YAML snapshot
     → PostToolUse hook triggers
-    → Haiku summarizes to ~2,000 tokens (keeps all ref= values)
-    → Primary model receives compact summary
+    → claude -p --model haiku (uses your Claude Code subscription auth)
+    → ~2,000-4,000 char compact summary
+    → Primary model receives summary only
 ```
 
 ## Benchmarks
 
-Tested on real browser automation tasks (3-page navigation):
+Tested on real browser automation (GitHub Trending page):
 
-| Metric | Before | After | Change |
-|--------|--------|-------|--------|
-| Tokens per snapshot | ~12,000 | ~2,000 | **-80%** |
-| 3-page session total | ~38,500 chars | ~8,200 chars | **-79%** |
-| Cost (Opus pricing) | $0.144 | $0.056 | **-61%** |
+| Tool Call | Before | After | Reduction |
+|-----------|--------|-------|-----------|
+| `browser_navigate` | 37,983 chars | 1,922 chars | **94%** |
+| `browser_snapshot` | 37,897 chars | 1,435 chars | **96%** |
 
 All `ref=` values are preserved, so clicking and interacting with elements works as before.
 
 ## Requirements
 
-- `ANTHROPIC_API_KEY` environment variable set
-- `jq` and `curl` installed
+- Claude Code CLI (`claude`) installed and authenticated
+- `jq` installed
 - Playwright MCP server configured in Claude Code
 
 ## Install
@@ -48,13 +46,9 @@ All `ref=` values are preserved, so clicking and interacting with elements works
 
 1. **PostToolUse hook** catches all `mcp__playwright__*` tool responses
 2. Responses under 3,000 characters pass through unchanged
-3. Large responses are sent to **Claude Haiku** with a prompt optimized for extracting:
-   - All `ref=` values for interactive elements
-   - Page URL and title
-   - Links, buttons, form fields
-   - Content listings in compact format
+3. Large responses are piped to `claude -p --model haiku` for summarization
 4. The summarized response replaces the original via `updatedMCPToolOutput`
-5. If Haiku fails or API key is missing, the original response passes through (safe fallback)
+5. If Haiku fails, the original response passes through (safe fallback)
 
 ## What Gets Removed
 

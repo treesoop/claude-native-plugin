@@ -1,6 +1,6 @@
 {
   "name": "playwright-optimizer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Reduce Playwright MCP snapshot token usage by ~90% using Haiku as a summarization layer",
   "author": {
     "name": "Treesoop",

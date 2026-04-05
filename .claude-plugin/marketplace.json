@@ -1,12 +1,12 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
-  "name": "potenlab-plugins",
+  "name": "treesoop-plugins",
   "owner": {
-    "name": "Potenlab",
-    "email": "potenlab.dev@gmail.com"
+    "name": "Treesoop",
+    "email": "treesoop@gmail.com"
   },
   "metadata": {
-    "description": "Claude Code plugins that save tokens and money by Potenlab",
+    "description": "Claude Code plugins that save tokens and money by Treesoop",
     "version": "1.0.0",
     "pluginRoot": "./plugins"
   },

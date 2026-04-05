@@ -38,7 +38,7 @@ All `ref=` values are preserved, so clicking and interacting with elements works
 ## Install
 
 ```bash
-/plugin marketplace add potenlab/claude-native-plugin
+/plugin marketplace add treesoop/claude-native-plugin
 /plugin install playwright-optimizer
 ```
 

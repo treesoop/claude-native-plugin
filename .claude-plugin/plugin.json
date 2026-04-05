@@ -1,10 +1,10 @@
 {
-  "name": "potenlab-plugins",
+  "name": "treesoop-plugins",
   "version": "1.0.0",
   "description": "Claude Code native plugins that save tokens, time, and money",
   "author": {
-    "name": "Potenlab",
-    "url": "https://github.com/potenlab"
+    "name": "Treesoop",
+    "url": "https://github.com/treesoop"
   },
-  "repository": "https://github.com/potenlab/claude-native-plugin"
+  "repository": "https://github.com/treesoop/claude-native-plugin"
 }

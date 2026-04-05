@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "description": "Reduce Playwright MCP snapshot token usage by ~90% using Haiku as a summarization layer",
   "author": {
-    "name": "Potenlab",
-    "url": "https://github.com/potenlab"
+    "name": "Treesoop",
+    "url": "https://github.com/treesoop"
   },
-  "homepage": "https://github.com/potenlab/claude-native-plugin/tree/main/plugins/playwright-optimizer",
-  "repository": "https://github.com/potenlab/claude-native-plugin",
+  "homepage": "https://github.com/treesoop/claude-native-plugin/tree/main/plugins/playwright-optimizer",
+  "repository": "https://github.com/treesoop/claude-native-plugin",
   "license": "MIT",
   "keywords": ["playwright", "token-optimization", "browser", "haiku", "cost-reduction"]
 }

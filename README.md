@@ -1,11 +1,11 @@
-# Claude Native Plugins by Potenlab
+# Claude Native Plugins by Treesoop
 
 Plugins that save tokens, time, and money for Claude Code users.
 
 ## Install
 
 ```bash
-/plugin marketplace add potenlab/claude-native-plugin
+/plugin marketplace add treesoop/claude-native-plugin
 /plugin install playwright-optimizer
 ```
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase-browser';
 import { UsageEvent } from '@/lib/types';
@@ -45,7 +45,7 @@ function calcTotalTime(events: UsageEvent[]): string {
   return `${hours}h ${mins}m`;
 }
 
-export default function DashboardPage() {
+function DashboardContent() {
   const searchParams = useSearchParams();
   const inviteKey = searchParams.get('key');
   const [range, setRange] = useState<'today' | 'week' | 'month'>('week');
@@ -110,5 +110,13 @@ export default function DashboardPage() {
         <ProjectBreakdown data={projectData} />
       </div>
     </div>
+  );
+}
+
+export default function DashboardPage() {
+  return (
+    <Suspense fallback={<div className="flex min-h-screen items-center justify-center"><p className="text-gray-500">Loading...</p></div>}>
+      <DashboardContent />
+    </Suspense>
   );
 }

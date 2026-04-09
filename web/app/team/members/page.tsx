@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase-browser';
 import { UsageEvent } from '@/lib/types';
@@ -20,7 +20,7 @@ function getDateRange(range: 'today' | 'week' | 'month'): string {
   return new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
 }
 
-export default function MemberDetailPage() {
+function MemberDetailContent() {
   const searchParams = useSearchParams();
   const inviteKey = searchParams.get('key');
   const [range, setRange] = useState<'today' | 'week' | 'month'>('week');
@@ -97,5 +97,13 @@ export default function MemberDetailPage() {
         <ProjectBreakdown data={projectData} />
       </div>
     </div>
+  );
+}
+
+export default function MemberDetailPage() {
+  return (
+    <Suspense>
+      <MemberDetailContent />
+    </Suspense>
   );
 }

@@ -17,6 +17,13 @@
       "source": "./plugins/playwright-optimizer",
       "category": "optimization",
       "tags": ["playwright", "token-optimization", "browser", "haiku", "cost-reduction"]
+    },
+    {
+      "name": "task-tracker",
+      "description": "Track Claude Code usage (tokens, time, projects) per team member",
+      "source": "./plugins/task-tracker",
+      "category": "analytics",
+      "tags": ["usage-tracking", "tokens", "team", "analytics", "supabase"]
     }
   ]
 }

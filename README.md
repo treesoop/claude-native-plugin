@@ -14,6 +14,7 @@ Plugins that save tokens, time, and money for Claude Code users.
 | Plugin | Description | Savings |
 |--------|-------------|---------|
 | [playwright-optimizer](./plugins/playwright-optimizer) | Summarize Playwright MCP snapshots with Haiku before they reach Opus | ~90% token reduction |
+| [task-tracker](./plugins/task-tracker) | Track Claude Code usage (tokens, time, projects) per team | Team analytics |
 
 ## How It Works
 
